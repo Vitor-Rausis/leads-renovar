@@ -48,8 +48,8 @@ export default function Sidebar({ open, onClose }) {
               <Puzzle className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-sm font-bold leading-tight">Diversão</h1>
-              <p className="text-xs text-white/60">Brinquedos</p>
+              <h1 className="text-sm font-bold leading-tight">Renovar</h1>
+              <p className="text-xs text-white/60">Leads</p>
             </div>
           </div>
           <button onClick={onClose} className="lg:hidden text-white/60 hover:text-white">
