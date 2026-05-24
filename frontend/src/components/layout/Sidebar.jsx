@@ -7,7 +7,7 @@ import {
   Settings,
   LogOut,
   X,
-  Puzzle,
+  Cross,
   CalendarClock,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
@@ -45,7 +45,7 @@ export default function Sidebar({ open, onClose }) {
         <div className="flex items-center justify-between px-5 py-6 border-b border-white/10">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-primary-500 rounded-lg flex items-center justify-center">
-              <Puzzle className="w-5 h-5" />
+              <Cross className="w-5 h-5" />
             </div>
             <div>
               <h1 className="text-sm font-bold leading-tight">Renovar</h1>
