@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node backend/src/server.js",
     "build": "npm run install:backend && npm run install:frontend && npm run build:frontend",
-    "install:backend": "cd backend && npm install",
-    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install --production=false",
+    "install:frontend": "cd frontend && npm install --production=false",
     "build:frontend": "cd frontend && npm run build",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev"
