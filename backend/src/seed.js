@@ -17,14 +17,14 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
 async function seed() {
   console.log('Criando usuario admin...');
 
-  const senha_hash = await bcrypt.hash('admin123', 10);
+  const senha_hash = await bcrypt.hash('renovar123', 10);
 
   const { data, error } = await supabase
     .from('users')
     .upsert(
       {
-        nome: 'Administrador',
-        email: 'admin@diversaobrinquedos.com',
+        nome: 'Administrador Renovar',
+        email: 'admin@renovar.com',
         senha_hash,
         role: 'admin',
         ativo: true,
@@ -48,17 +48,17 @@ async function seed() {
     {
       tipo: 'dia_3',
       conteudo:
-        'Ola {{nome}}, voce tem alguma duvida sobre os brinquedos, ou tem interesse em fazer a reserva?',
+        'Ola {{nome}}, voce tem alguma duvida sobre nossos servicos, ou tem interesse em fazer um orcamento?',
     },
     {
       tipo: 'dia_7',
       conteudo:
-        'Ola {{nome}}, como vai? Voce ja fez a locacao dos brinquedos, ou tem interesse em fazer a locacao?',
+        'Ola {{nome}}, como vai? Voce ja fez seu orcamento conosco, ou tem interesse em fazer agora?',
     },
     {
       tipo: 'mes_10',
       conteudo:
-        'Ola {{nome}}, sou o Fernando da Diversao Brinquedos, como vai?\nHa um tempo atras voce fez a cotacao de brinquedos com nossa empresa.\nGostaria de saber se tem interesse em receber o catalogo atualizado para uma nova locacao?',
+        'Ola {{nome}}, sou da Renovar, como vai?\nHa um tempo atras voce fez uma cotacao com a nossa empresa.\nGostaria de saber se tem interesse em receber o catalogo atualizado para um novo orcamento?',
     },
   ];
 
@@ -74,14 +74,14 @@ async function seed() {
     }
   }
 
-  // Seed drip campaign - Diversao Brinquedos Follow-up
+  // Seed drip campaign - Renovar Follow-up
   console.log('Criando campanha drip...');
 
   const { data: existingCampaign } = await supabase
     .from('drip_campaigns')
     .select('id')
-    .eq('name', 'Diversão Brinquedos - Follow-up')
-    .single();
+    .eq('name', 'Renovar - Follow-up')
+    .maybeSingle();
 
   if (existingCampaign) {
     console.log('Campanha drip ja existe, pulando...');
@@ -89,7 +89,7 @@ async function seed() {
     const { data: campaign, error: campErr } = await supabase
       .from('drip_campaigns')
       .insert({
-        name: 'Diversão Brinquedos - Follow-up',
+        name: 'Renovar - Follow-up',
         description: 'Sequência automática: 3 dias, 7 dias e 10 meses após cadastro',
         trigger_event: 'lead_created',
         is_active: true,
@@ -106,21 +106,21 @@ async function seed() {
           step_order: 1,
           delay_minutes: 4320, // 3 dias
           message_template:
-            'Olá {{nome}}, você tem alguma dúvida sobre os brinquedos, ou tem interesse em fazer a reserva?',
+            'Olá {{nome}}, você tem alguma dúvida sobre nossos serviços, ou tem interesse em fazer um orçamento?',
         },
         {
           campaign_id: campaign.id,
           step_order: 2,
           delay_minutes: 5760, // +4 dias (total 7 dias)
           message_template:
-            'Olá {{nome}}, como vai?\nVocê já fez a locação dos brinquedos, ou tem interesse em fazer a locação?',
+            'Olá {{nome}}, como vai?\nVocê já fez seu orçamento conosco, ou tem interesse em fazer agora?',
         },
         {
           campaign_id: campaign.id,
           step_order: 3,
           delay_minutes: 432000, // +~300 dias (total ~10 meses)
           message_template:
-            'Olá {{nome}}, sou o Fernando da Diversão Brinquedos, como vai?\n\nA um tempo atrás você fez a cotação de brinquedos com nossa empresa, quero saber se tem interesse em receber o catálogo atualizado para uma nova locação?',
+            'Olá {{nome}}, sou da Renovar, como vai?\n\nHá um tempo atrás você fez uma cotação com a nossa empresa, quero saber se tem interesse em receber o catálogo atualizado para um novo orçamento?',
         },
       ];
 
@@ -135,7 +135,7 @@ async function seed() {
   }
 
   console.log('\nSeed completo!');
-  console.log('Login: admin@diversaobrinquedos.com / admin123');
+  console.log('Login: admin@renovar.com / renovar123');
 }
 
 seed().catch(console.error);
