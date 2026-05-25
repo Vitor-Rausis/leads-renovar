@@ -127,9 +127,9 @@ export default function LeadDetailPage() {
                     <p className="text-sm font-medium text-gray-700">
                       {msg.conteudo_custom
                         ? <span className="truncate block" title={msg.conteudo_custom}>{msg.conteudo_custom.length > 60 ? msg.conteudo_custom.substring(0, 60) + '…' : msg.conteudo_custom}</span>
-                        : msg.tipo === 'dia_3' ? 'Mensagem 3 dias'
-                        : msg.tipo === 'dia_7' ? 'Mensagem 7 dias'
-                        : 'Mensagem 10 meses'
+                        : msg.tipo === 'dia_3' ? 'Primeira mensagem'
+                        : msg.tipo === 'dia_7' ? 'Segunda mensagem'
+                        : 'Terceira mensagem (reengajamento)'
                       }
                     </p>
                     <p className="text-xs text-gray-500 mt-0.5">
