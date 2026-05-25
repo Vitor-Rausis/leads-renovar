@@ -6,6 +6,7 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Badge from '../components/ui/Badge';
 import EmptyState from '../components/ui/EmptyState';
+import WhatsAppConnect from '../components/settings/WhatsAppConnect';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
 
@@ -67,8 +68,11 @@ export default function SettingsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Configurações</h1>
-        <p className="text-sm text-gray-500 mt-1">Gerencie as API keys de integração</p>
+        <p className="text-sm text-gray-500 mt-1">Conexão WhatsApp e API keys de integração</p>
       </div>
+
+      {/* WhatsApp Section */}
+      <WhatsAppConnect />
 
       {/* API Keys Section */}
       <Card className="p-6">
