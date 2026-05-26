@@ -12,6 +12,7 @@ import MessagesPage from './pages/MessagesPage';
 import ReportsPage from './pages/ReportsPage';
 import SettingsPage from './pages/SettingsPage';
 import MessageConfigPage from './pages/MessageConfigPage';
+import AgendaPage from './pages/AgendaPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Ping o backend a cada 10 minutos para evitar hibernate no Render free tier
@@ -48,6 +49,7 @@ export default function App() {
               <Route path="/reports" element={<ReportsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/config/messages" element={<MessageConfigPage />} />
+              <Route path="/agenda" element={<AgendaPage />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFoundPage />} />

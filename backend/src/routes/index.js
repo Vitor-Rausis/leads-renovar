@@ -12,6 +12,7 @@ const settingsRoutes = require('./settingsRoutes');
 const configRoutes = require('./configRoutes');
 const whatsappRoutes = require('./whatsappRoutes');
 const dripCampaignRoutes = require('./dripCampaignRoutes');
+const tarefaRoutes = require('./tarefaRoutes');
 
 router.use('/auth', authRoutes);
 router.use('/leads', leadRoutes);
@@ -24,5 +25,6 @@ router.use('/settings', settingsRoutes);
 router.use('/config', configRoutes);
 router.use('/whatsapp', whatsappRoutes);
 router.use('/drip-campaigns', dripCampaignRoutes);
+router.use('/tarefas', tarefaRoutes);
 
 module.exports = router;

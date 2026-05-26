@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -9,14 +10,17 @@ import {
   X,
   Cross,
   CalendarClock,
+  CalendarCheck,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import { getTarefasCounts } from '../../api/tarefaApi';
 import clsx from 'clsx';
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/leads', icon: Users, label: 'Leads' },
   { to: '/messages', icon: MessageSquare, label: 'Mensagens' },
+  { to: '/agenda', icon: CalendarCheck, label: 'Agenda', badgeKey: 'vencidas' },
   { to: '/reports', icon: BarChart3, label: 'Relatórios' },
   { to: '/config/messages', icon: CalendarClock, label: 'Agendamentos' },
   { to: '/settings', icon: Settings, label: 'Configurações' },
@@ -24,6 +28,19 @@ const navItems = [
 
 export default function Sidebar({ open, onClose }) {
   const { logout, user } = useAuth();
+  const [vencidas, setVencidas] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    const load = () =>
+      getTarefasCounts()
+        .then((res) => { if (active) setVencidas(res.data?.vencidas || 0); })
+        .catch(() => {});
+    load();
+    // Atualiza o contador a cada 2 minutos
+    const id = setInterval(load, 2 * 60 * 1000);
+    return () => { active = false; clearInterval(id); };
+  }, []);
 
   return (
     <>
@@ -59,24 +76,32 @@ export default function Sidebar({ open, onClose }) {
 
         {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-1">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              onClick={onClose}
-              className={({ isActive }) =>
-                clsx(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-sidebar-active text-white'
-                    : 'text-white/70 hover:bg-sidebar-hover hover:text-white'
-                )
-              }
-            >
-              <item.icon className="w-5 h-5" />
-              {item.label}
-            </NavLink>
-          ))}
+          {navItems.map((item) => {
+            const badge = item.badgeKey === 'vencidas' ? vencidas : 0;
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  clsx(
+                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                    isActive
+                      ? 'bg-sidebar-active text-white'
+                      : 'text-white/70 hover:bg-sidebar-hover hover:text-white'
+                  )
+                }
+              >
+                <item.icon className="w-5 h-5" />
+                <span className="flex-1">{item.label}</span>
+                {badge > 0 && (
+                  <span className="inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-danger-600 text-white text-xs font-bold">
+                    {badge}
+                  </span>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
 
         {/* Footer */}
