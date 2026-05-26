@@ -2,7 +2,7 @@ app = "leads-renovar-evolution"
 primary_region = "iad"
 
 [build]
-  image = "atendai/evolution-api:v2.1.1"
+  image = "atendai/evolution-api:v2.2.3"
 
 [env]
   SERVER_TYPE = "https"
