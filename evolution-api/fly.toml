@@ -2,7 +2,7 @@ app = "leads-renovar-evolution"
 primary_region = "iad"
 
 [build]
-  image = "atendai/evolution-api:v2.2.3"
+  image = "registry.fly.io/leads-diversao-evolution:v2.3.7-fly"
 
 [env]
   SERVER_TYPE = "https"
