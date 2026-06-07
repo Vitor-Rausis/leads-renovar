@@ -60,6 +60,11 @@ async function seed() {
       conteudo:
         'Ola {{nome}}, sou da Renovar, como vai?\nHa um tempo atras voce fez uma cotacao com a nossa empresa.\nGostaria de saber se tem interesse em receber o catalogo atualizado para um novo orcamento?',
     },
+    {
+      tipo: 'dia_10',
+      conteudo:
+        'Ola {{nome}}, ainda tem interesse em saber mais sobre nossos servicos?',
+    },
   ];
 
   for (const t of templates) {

@@ -10,13 +10,17 @@ import { sendText } from "../_shared/evolutionApi.ts";
 
 const MAX_RETRIES = 3;
 
+// Defaults usados apenas como ultima cartada — o banco (templates_mensagem)
+// e a fonte primaria. Atualize estes se precisar mudar fallback.
 const DEFAULT_TEMPLATES: Record<string, string> = {
   dia_3:
-    "Ola {{nome}}, voce tem alguma duvida sobre os brinquedos, ou tem interesse em fazer a reserva?",
+    "Ola {{nome}}, voce tem alguma duvida sobre nossos servicos, ou tem interesse em fazer um orcamento?",
   dia_7:
-    "Ola {{nome}}, como vai? Voce ja fez a locacao dos brinquedos, ou tem interesse em fazer a locacao?",
+    "Ola {{nome}}, como vai? Voce ja fez seu orcamento conosco, ou tem interesse em fazer agora?",
+  dia_10:
+    "Ola {{nome}}, ainda tem interesse em saber mais sobre nossos servicos?",
   mes_10:
-    "Ola {{nome}}, sou o Fernando da Diversao Brinquedos, como vai?\nHa um tempo atras voce fez a cotacao de brinquedos com nossa empresa.\nGostaria de saber se tem interesse em receber o catalogo atualizado para uma nova locacao?",
+    "Ola {{nome}}, sou da Renovar, como vai?\nHa um tempo atras voce fez uma cotacao com a nossa empresa.\nGostaria de saber se tem interesse em receber o catalogo atualizado para um novo orcamento?",
 };
 
 Deno.serve(async (_req) => {

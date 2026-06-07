@@ -1,7 +1,7 @@
 const MessageModel = require('../models/messageModel');
 const supabase = require('../config/supabase');
 
-const TIPOS_VALIDOS = ['dia_3', 'dia_7', 'mes_10'];
+const TIPOS_VALIDOS = ['dia_3', 'dia_7', 'mes_10', 'dia_10'];
 const STATUS_VALIDOS = ['Novo', 'Em Contato', 'Respondeu', 'Convertido', 'Perdido'];
 
 async function createScheduled(req, res, next) {
@@ -9,7 +9,7 @@ async function createScheduled(req, res, next) {
     const { lead_id, tipo, conteudo_custom, data_agendada } = req.body;
 
     if (!lead_id) return res.status(400).json({ error: 'lead_id é obrigatório' });
-    if (!tipo || !TIPOS_VALIDOS.includes(tipo)) return res.status(400).json({ error: 'tipo inválido. Use: dia_3, dia_7 ou mes_10' });
+    if (!tipo || !TIPOS_VALIDOS.includes(tipo)) return res.status(400).json({ error: `tipo inválido. Use: ${TIPOS_VALIDOS.join(', ')}` });
     if (!data_agendada) return res.status(400).json({ error: 'data_agendada é obrigatória' });
     if (new Date(data_agendada) <= new Date()) return res.status(400).json({ error: 'data_agendada deve ser no futuro' });
     if (conteudo_custom !== undefined && conteudo_custom !== null && conteudo_custom.trim() === '') {

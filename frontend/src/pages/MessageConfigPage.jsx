@@ -8,7 +8,8 @@ import BulkScheduleSummary from '../components/messages/BulkScheduleSummary';
 const tipoLabels = {
   dia_3: 'Primeira Mensagem',
   dia_7: 'Segunda Mensagem',
-  mes_10: 'Terceira Mensagem (Reengajamento)',
+  mes_10: 'Terceira Mensagem',
+  dia_10: 'Quarta Mensagem',
 };
 
 export default function MessageConfigPage() {
