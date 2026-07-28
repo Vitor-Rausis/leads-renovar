@@ -11,12 +11,15 @@ class LeadModel {
     if (search) {
       // Busca por nome OU telefone. Para o telefone, usa so os digitos do termo
       // (ignora mascara: parenteses, espacos, tracos) contra o whatsapp armazenado.
+      // IMPORTANTE: dentro de .or() o wildcard do ilike e * (nao %), e virgula/parenteses
+      // sao separadores do PostgREST — por isso removemos esses caracteres do termo.
       const term = String(search).trim();
       const digits = term.replace(/\D/g, '');
-      const escaped = term.replace(/[%_,]/g, (c) => `\\${c}`);
-      const filters = [`nome.ilike.%${escaped}%`];
-      if (digits) filters.push(`whatsapp.ilike.%${digits}%`);
-      query = query.or(filters.join(','));
+      const safe = term.replace(/[,()*]/g, ' ').trim();
+      const filters = [];
+      if (safe) filters.push(`nome.ilike.*${safe}*`);
+      if (digits) filters.push(`whatsapp.ilike.*${digits}*`);
+      if (filters.length) query = query.or(filters.join(','));
     }
 
     const from = (page - 1) * limit;
