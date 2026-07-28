@@ -1,12 +1,16 @@
 const { z } = require('zod');
 
 // Valida o whatsapp pelos digitos (ignora mascara: parenteses, espacos, tracos).
-// O usuario pode digitar "(41) 99999-8888" — contam so os digitos (10 a 13).
+// O usuario pode digitar "(41) 99999-8888" — contam so os digitos.
+// Aceita 10-13 digitos, ou 14 quando for o padrao "55 DD 9 + 9 digitos"
+// (numero com o "9" extra que o formatPhone normaliza depois para 13).
 const whatsappSchema = z
   .string()
   .refine((v) => {
     const digits = (v || '').replace(/\D/g, '');
-    return digits.length >= 10 && digits.length <= 13;
+    if (digits.length >= 10 && digits.length <= 13) return true;
+    if (digits.length === 14 && /^55\d{2}9\d{9}$/.test(digits)) return true;
+    return false;
   }, 'WhatsApp invalido');
 
 const leadSchema = z.object({
