@@ -60,13 +60,9 @@ Deno.serve(async (_req) => {
   let cancelled = 0;
 
   for (const msg of messages) {
-    // Regras de cancelamento: lead Convertido/Perdido nao recebe dia_3/dia_7
-    // (mes_10 sempre envia; forcar_envio bypassa)
-    if (
-      !msg.forcar_envio &&
-      msg.tipo !== "mes_10" &&
-      ["Perdido", "Convertido"].includes(msg.lead_status)
-    ) {
+    // Lead Convertido/Perdido nao recebe NENHUMA mensagem automatica (qualquer tipo).
+    // Segunda camada: caso alguma pendente tenha escapado do cancelamento no backend.
+    if (["Perdido", "Convertido"].includes(msg.lead_status)) {
       await supabase
         .from("mensagens_agendadas")
         .update({ status: "cancelada", enviada_em: null })

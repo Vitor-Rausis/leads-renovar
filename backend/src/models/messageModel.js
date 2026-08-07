@@ -84,14 +84,14 @@ class MessageModel {
     if (error) throw error;
   }
 
-  // Cancela apenas dia_3 e dia_7, preservando mes_10 (usada ao marcar Convertido/Perdido)
+  // Cancela TODAS as mensagens pendentes do lead (usada ao marcar Convertido/Perdido).
+  // Lead finalizado nao recebe mais nenhuma mensagem automatica, de nenhum tipo.
   static async cancelNonFinalMessagesForLead(leadId) {
     const { error } = await supabase
       .from('mensagens_agendadas')
       .update({ status: 'cancelada' })
       .eq('lead_id', leadId)
-      .eq('status', 'pendente')
-      .in('tipo', ['dia_3', 'dia_7']);
+      .eq('status', 'pendente');
 
     if (error) throw error;
   }
