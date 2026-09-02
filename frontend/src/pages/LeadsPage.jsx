@@ -90,6 +90,25 @@ export default function LeadsPage() {
   };
 
   const handleStatusChange = async (lead, novoStatus) => {
+    // Convertido/Perdido finalizam o lead: excluem do sistema (com confirmacao).
+    // O CASCADE do banco remove as mensagens agendadas pendentes junto.
+    if (novoStatus === 'Convertido' || novoStatus === 'Perdido') {
+      if (
+        !window.confirm(
+          `Marcar "${lead.nome}" como ${novoStatus} vai EXCLUIR o lead do sistema. Continuar?`
+        )
+      )
+        return;
+      try {
+        await deleteLead(lead.id);
+        toast.success(`${lead.nome} marcado como ${novoStatus} e removido`);
+        loadLeads();
+      } catch (err) {
+        toast.error('Erro ao finalizar lead');
+      }
+      return;
+    }
+
     try {
       await updateLead(lead.id, { status: novoStatus });
       toast.success(`${lead.nome} marcado como ${novoStatus}`);
